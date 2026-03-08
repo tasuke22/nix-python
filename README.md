@@ -165,5 +165,15 @@ uv add httpx          # ライブラリ追加
 uv add --dev mypy     # 開発依存の追加
 
 # Nix 側の更新
-nix flake update      # nixpkgs 等を最新に更新
+nix flake update      # 全 input を最新に更新
+nix flake update nixpkgs  # nixpkgs だけ更新
 ```
+
+### 開発ツールのバージョン更新
+
+uv, ty, just, ruff はすべて nixpkgs から提供されている。
+`nix flake update` で nixpkgs を更新すれば、これらも nixpkgs 時点の最新バージョンに上がる。
+
+- 全ツールが一括更新される（特定ツールだけの更新はできない）
+- nixpkgs への取り込みにはラグがあるため、PyPI/GitHub の最新版とは限らない
+- 問題があれば `git checkout flake.lock` で戻せる
