@@ -37,6 +37,13 @@
           pre-commit-check = git-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
+              gitleaks = {
+                enable = true;
+                name = "gitleaks";
+                entry = "${pkgs.gitleaks}/bin/gitleaks protect --staged --config .gitleaks.toml";
+                language = "system";
+                pass_filenames = false;
+              };
               treefmt = {
                 enable = true;
                 package = treefmtEval.config.build.wrapper;
@@ -61,6 +68,7 @@
               ty
               just
               ruff
+              gitleaks
             ];
 
             shellHook = ''
