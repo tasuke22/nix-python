@@ -10,6 +10,9 @@ nix-python/
 ├── pyproject.toml     # Python プロジェクト設定
 ├── uv.lock            # Python 依存のロックファイル
 ├── justfile           # タスクランナー
+├── actrun.toml        # actrun ローカル CI 設定
+├── .github/workflows/
+│   └── ci.yml         # GitHub Actions CI
 ├── .gitignore         # Git 除外設定
 ├── src/
 │   └── __init__.py    # ソースコード置き場
@@ -133,6 +136,27 @@ Nix とは独立した、純粋な Python プロジェクト設定。
 | `just format`   | `nix fmt`（自動フォーマット）                         |
 | `just ty`       | `uv run ty check src`（型チェック）                   |
 | `just build`    | `uv build`（パッケージビルド）                        |
+
+### CI（.github/workflows/ci.yml）
+
+GitHub Actions で以下を自動実行:
+
+| ステップ     | 実行内容                     |
+| ------------ | ---------------------------- |
+| Format check | `nix fmt -- --ci`            |
+| Type check   | `ty check src`               |
+| Lint         | `ruff check .`               |
+| Test         | `uv sync --locked && pytest` |
+
+[actrun](https://github.com/mizchi/actrun) でローカル実行できる:
+
+```bash
+actrun workflow run .github/workflows/ci.yml   # ローカルで CI を実行
+actrun lint                                    # ワークフローの静的チェック
+actrun viz .github/workflows/ci.yml            # ジョブ依存グラフを可視化
+```
+
+設定は `actrun.toml` で管理。ローカルでは `actions/checkout` と `nix-installer-action` を自動スキップする。
 
 ### .gitignore
 
