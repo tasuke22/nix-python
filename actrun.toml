@@ -1,0 +1,4 @@
+workspace_mode = "local"
+local_skip_actions = ["actions/checkout", "DeterminateSystems/nix-installer-action"]
+trust_actions = true
+nix_mode = "auto"
