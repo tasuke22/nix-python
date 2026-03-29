@@ -16,3 +16,6 @@ dist/
 build/
 
 .pre-commit-config.yaml
+
+# actrun
+_build/actrun/
