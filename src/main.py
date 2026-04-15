@@ -1,14 +1,25 @@
+import httpx
+from pydantic import BaseModel
+
+
+class User(BaseModel):
+    id: int
+    name: str
+    email: str
+
+
+def fetch_user(user_id: int) -> User:
+    response = httpx.get(f"https://jsonplaceholder.typicode.com/users/{user_id}")
+    response.raise_for_status()
+    data = response.json()
+    return User(id=data["id"], name=data["name"], email=data["email"])
+
+
 def main():
-    breakpoint()
-    list = [1, 2, 3]
-    list.append(4)
-    list.append(5)
-    list.append(6)
-    list.append(7)
-    list.append(8)
-    list.append(9)
-    list.append(10)
-    print("Hello, nix-python!")
+    user = fetch_user(1)
+    print(f"ID:    {user.id}")
+    print(f"Name:  {user.name}")
+    print(f"Email: {user.email}")
 
 
 if __name__ == "__main__":
