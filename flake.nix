@@ -76,6 +76,8 @@
               gitleaks
             ];
 
+            env.PYTHONBREAKPOINT = "pudb.set_trace";
+
             shellHook = ''
               if [ ! -d .venv ] || [ uv.lock -nt .venv ]; then
                 echo "Installing Python dependencies..."
