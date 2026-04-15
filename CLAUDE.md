@@ -1,70 +1,22 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this repository.
+## 開発環境
 
-## Development Environment
-
-Nix flake で開発環境を管理している。`cd` するだけで direnv 経由で自動的に有効化される。
-
-### 開発ツール（Nix が提供）
-
-| ツール   | 用途                        |
-| -------- | --------------------------- |
-| uv       | Python パッケージマネージャ |
-| ty       | 型チェッカー                |
-| just     | タスクランナー              |
-| ruff     | リンター＆フォーマッター    |
-| gitleaks | 秘密情報漏洩チェック        |
-
-Python 自体は uv が管理するので Nix には含めていない。
-
-### Treefmt（`nix fmt`）
-
-| フォーマッター | 対象          |
-| -------------- | ------------- |
-| nixfmt         | .nix ファイル |
-| ruff-check     | Python lint   |
-| ruff-format    | Python format |
-| oxfmt          | Markdown      |
-
-### Pre-commit Hooks（git-hooks.nix）
-
-| フック   | 内容                                         |
-| -------- | -------------------------------------------- |
-| gitleaks | ステージングされたファイルの秘密情報チェック |
-| treefmt  | 自動フォーマット                             |
-| ty       | `src/` の型チェック                          |
-
-`nix develop` 時に自動インストールされる。`.pre-commit-config.yaml` は自動生成されるので手動編集しない。
+Nix flake + direnv で管理。`cd` するだけで有効化される。
+Nix が uv, ty, just, ruff, gitleaks を提供し、Python 自体は uv が管理する。
 
 ## コマンド
 
 ```bash
-just check      # ty check + ruff check --fix
+just fix        # ruff check --fix + ty check src
 just test       # pytest 実行
-just coverage   # テスト + カバレッジ
-just lint       # nix fmt --fail-on-change（チェックのみ）
-just fix        # ruff check --fix + nix fmt
-just format     # nix fmt
-just ty         # ty check src
-just build      # uv build
-just install    # uv sync
+just check      # fix + test をまとめて実行
+nix fmt         # フォーマット（nixfmt + ruff + oxfmt）
 ```
 
 ## パッケージ管理
 
-- `uv add <package>` で依存を追加する
-- `uv add --dev <package>` で開発依存を追加する
-- `uv pip install` は使わない
-
-## プロジェクト構造
-
-- `src/` — ソースコード
-- `tests/` — テスト（pytest）
-- `flake.nix` — Nix 開発環境の定義
-- `pyproject.toml` — Python プロジェクト設定
-- `.envrc` — direnv 設定（`watch_file uv.lock` + `use flake`）
-- `.gitleaks.toml` — gitleaks 設定
+- `uv add <package>` で依存を追加（`uv pip install` は使わない）
 
 ## コードスタイル
 
