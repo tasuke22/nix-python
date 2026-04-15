@@ -3,7 +3,7 @@ name = "nix-python"
 version = "0.1.0"
 description = ""
 requires-python = ">=3.13"
-dependencies = []
+dependencies = ["httpx>=0.28.1", "pydantic>=2.13.0"]
 
 [build-system]
 requires = ["hatchling"]
