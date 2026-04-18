@@ -157,8 +157,15 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
+debug = [
+    { name = "pudb" },
+]
 dev = [
     { name = "pudb" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+]
+test = [
     { name = "pytest" },
     { name = "pytest-cov" },
 ]
@@ -170,8 +177,13 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
+debug = [{ name = "pudb", specifier = ">=2025.1.5" }]
 dev = [
     { name = "pudb", specifier = ">=2025.1.5" },
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+]
+test = [
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
 ]

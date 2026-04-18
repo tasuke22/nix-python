@@ -12,8 +12,22 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
 
+# PEP 735: 役割別 dependency groups。CI で --only-group <name> 指定可能。
 [dependency-groups]
-dev = ["pudb>=2025.1.5", "pytest>=9.0.3", "pytest-cov>=7.1.0"]
+test = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+]
+debug = [
+    "pudb>=2025.1.5",
+]
+dev = [
+    { include-group = "test" },
+    { include-group = "debug" },
+]
+# 将来追加する可能性があるグループ（必要になったら有効化）:
+# docs = ["mkdocs", "mkdocs-material"]
+# typecheck = ["mypy"]  # ty 以外の型チェッカーを併用したい場合
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
