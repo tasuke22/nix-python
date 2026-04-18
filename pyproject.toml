@@ -30,7 +30,16 @@ dev = [
 # typecheck = ["mypy"]  # ty 以外の型チェッカーを併用したい場合
 
 [tool.pytest.ini_options]
+minversion = "9.0"
 testpaths = ["tests"]
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+]
+# 将来追加する可能性のある設定:
+# asyncio_mode = "auto"                # pytest-asyncio 導入時
+# markers = ["slow: 遅いテスト"]        # カスタムマーカー登録時
 
 [tool.ruff]
 line-length = 110
